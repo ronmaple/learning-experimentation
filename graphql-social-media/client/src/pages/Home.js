@@ -11,8 +11,14 @@ function Home() {
   // probably because it's not cached after load.
   const {
     loading,
+    error,
     data: { getPosts: posts },
   } = useQuery(FETCH_POSTS_QUERY)
+
+  // no error handling throws an async fetch-type error and crashes to the page (unknown root)
+  if (error) {
+    return <h1>Error</h1>
+  }
 
   return (
     <Grid columns={3}>
@@ -35,8 +41,10 @@ function Home() {
   )
 }
 
+// The syntax is slightly different on this version? { getPosts ... } with no "query" passed
+// is a syntax error
 const FETCH_POSTS_QUERY = gql`
-  {
+  query {
     getPosts {
       id
       body
@@ -56,5 +64,4 @@ const FETCH_POSTS_QUERY = gql`
     }
   }
 `
-
 export default Home
