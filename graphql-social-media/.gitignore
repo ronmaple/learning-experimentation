@@ -6,3 +6,4 @@ config.js
 
 # personal
 .vscode
+client/.prettierrc
