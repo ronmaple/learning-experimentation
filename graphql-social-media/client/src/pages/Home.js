@@ -1,7 +1,6 @@
 import React from "react"
-// different imports from tutorial. @apollo/client/index.js already exports these
-import { useQuery, gql } from "@apollo/client"
-
+import { useQuery } from "@apollo/react-hooks"
+import gql from "graphql-tag"
 import { Grid } from "semantic-ui-react"
 
 import PostCard from "../components/PostCard"
@@ -44,7 +43,7 @@ function Home() {
 // The syntax is slightly different on this version? { getPosts ... } with no "query" passed
 // is a syntax error
 const FETCH_POSTS_QUERY = gql`
-  query {
+  {
     getPosts {
       id
       body

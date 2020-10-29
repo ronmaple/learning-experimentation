@@ -25,7 +25,7 @@ module.exports = {
 			const { errors, valid } = validateLoginInput(username, password);
 
 			if (!valid) {
-				throw new UserInputError('Errors', errors);
+				throw new UserInputError('Errors', { errors });
 			}
 
 			const user = await User.findOne({ username });
@@ -51,9 +51,12 @@ module.exports = {
 		},
 		async register(_, { registerInput: { username, email, password, confirmPassword } }) {
 			console.log('register');
+			console.log('register inputs: ', username, email, password, confirmPassword);
 			const { valid, errors } = validateRegisterInput(username, email, password, confirmPassword);
 			if (!valid) {
-				throw new UserInputError('Errors', errors);
+				// NOTE: error needs to be an object. this was an error in the front end;
+				console.log('errors', errors);
+				throw new UserInputError('Errors', { errors });
 			}
 
 			const user = await User.findOne({ username });
