@@ -1,41 +1,41 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { Button, Form } from "semantic-ui-react"
-import { gql, useMutation } from "@apollo/client"
+import { useMutation } from "@apollo/react-hooks"
+import gql from "graphql-tag"
 
-function Register() {
-  const [values, setValues] = useState({
+import { AuthContext } from "../context/auth"
+import { useForm } from "../utils/hooks"
+
+function Register(props) {
+  const context = useContext(AuthContext)
+  const [errors, setErrors] = useState({})
+
+  const { onChange, onSubmit, values } = useForm(registerUser, {
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   })
 
-  const onChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    })
-  }
-
-  // array destructuring?
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(proxy, result) {
-      console.log("result", result)
-      console.log("proxy", proxy)
+    update(_, { data: { register: userData } }) {
+      context.login(userData)
+      props.history.push("/")
     },
-    variables: {
-      username: values.username,
+    onError(err) {
+      setErrors(err.graphQLErrors[0].extensions.exception.errors)
     },
+    variables: values,
   })
 
-  const onSubmit = (event) => {
-    event.preventDefault()
+  // addUser becomes available within the file scope - hoisting
+  function registerUser() {
     addUser()
   }
 
   return (
     <div className="form-container">
-      <Form onSubmit={onSubmit} noValidate>
+      <Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ""}>
         <h1>Register</h1>
         <Form.Input
           label="Username"
@@ -44,6 +44,7 @@ function Register() {
           type="text"
           value={values.username}
           onChange={onChange}
+          error={errors.username ? true : false}
         />
         <Form.Input
           label="Email"
@@ -52,6 +53,7 @@ function Register() {
           type="email"
           value={values.email}
           onChange={onChange}
+          error={errors.email ? true : false}
         />
         <Form.Input
           label="Password"
@@ -60,6 +62,7 @@ function Register() {
           type="password"
           value={values.password}
           onChange={onChange}
+          error={errors.password ? true : false}
         />
         <Form.Input
           label="Confirm Password"
@@ -68,11 +71,21 @@ function Register() {
           type="password"
           value={values.confirmPassword}
           onChange={onChange}
+          error={errors.password ? true : false}
         />
         <Button type="submit" primary>
           Register
         </Button>
       </Form>
+      {Object.keys(errors).length > 0 && (
+        <div className="ui error message">
+          <ul className="list">
+            {Object.values(errors).map((value) => (
+              <li key={value}>{value}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
