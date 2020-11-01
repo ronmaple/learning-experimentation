@@ -8,3 +8,8 @@ jobs:
       - checkout:
           path: ~/learning-experimentation
       - run: echo "fml"
+workflows:
+  version: 2.1
+  test_run:
+    jobs:
+      - test_1
