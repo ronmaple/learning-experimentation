@@ -21,15 +21,15 @@ jobs:
       - run: npm install
       - run: npm test
   test_require:
-    docker:
+    docker: 
       - image: circleci/node:latest
-    steps:
-      - checkout:
-          path: ~/learning-experimentation
-      - run: echo "testing ::test_require to run in parallel with ::test"
+    - checkout
+    - run: echo "testing ::test_require to run in parallel with ::test"
 workflows:
   version: 2.1
   build_and_test:
     jobs:
       - build
       - test
+        require:
+          - test_require
