@@ -10,23 +10,22 @@ workflows:
       - node/test
 working_directory: ~/learning-experimentation/robofriends-ci-master
 steps:
-    checkout:
-        path: ~/learning-experimentation
-        
-    # Download and cache dependencies
-    - restore_cache:
-        keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+  - checkout:
+      - path: ~/learning-experimentation
 
-    - run: npm install
+  # Download and cache dependencies
+  - restore_cache:
+      keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
 
-    - save_cache:
-        paths:
-          - node_modules
-        key: v1-dependencies-{{ checksum "package.json" }}
+  - run: npm install
 
-    # run tests!
-    - run: npm test
+  - save_cache:
+      paths:
+        - node_modules
+      key: v1-dependencies-{{ checksum "package.json" }}
 
+  # run tests!
+  - run: npm test
