@@ -4,28 +4,29 @@ version: 2.1
 #orbs:
 #  node: circleci/node@3.0.0
 
-workflows:
-  node-tests:
-    jobs:
-      - node/test
-working_directory: ~/learning-experimentation/robofriends-ci-master
-steps:
-  - checkout:
-      - path: ~/learning-experimentation
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:7.10
+  working_directory: ~/learning-experimentation/robofriends-ci-master
+  steps:
+    - checkout:
+        - path: ~/learning-experimentation
 
-  # Download and cache dependencies
-  - restore_cache:
-      keys:
-        - v1-dependencies-{{ checksum "package.json" }}
-        # fallback to using the latest cache if no exact match is found
-        - v1-dependencies-
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
 
-  - run: npm install
+    - run: npm install
 
-  - save_cache:
-      paths:
-        - node_modules
-      key: v1-dependencies-{{ checksum "package.json" }}
+    - save_cache:
+        paths:
+          - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
 
-  # run tests!
-  - run: npm test
+    # run tests!
+    - run: npm test
