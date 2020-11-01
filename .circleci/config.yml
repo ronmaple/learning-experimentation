@@ -8,6 +8,7 @@ jobs:
       - checkout:
           path: ~/learning-experimentation
       - run: echo "fml"
+      - run: npm install
 workflows:
   version: 2.1
   test_run:
