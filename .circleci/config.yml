@@ -21,7 +21,7 @@ jobs:
       - run: npm install
       - run: npm test
   test_require:
-    docker: 
+    docker:
       - image: circleci/node:latest
     steps:
       - checkout
@@ -32,6 +32,6 @@ workflows:
   build_and_test:
     jobs:
       - build
-      - test
-        require:
+      - test:
+        requires:
           - test_require
