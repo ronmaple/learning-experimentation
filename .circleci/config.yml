@@ -23,8 +23,10 @@ jobs:
   test_require:
     docker: 
       - image: circleci/node:latest
-    - checkout
-    - run: echo "testing ::test_require to run in parallel with ::test"
+    steps:
+      - checkout
+      - run: echo "testing ::test_require to run in parallel with ::test"
+
 workflows:
   version: 2.1
   build_and_test:
