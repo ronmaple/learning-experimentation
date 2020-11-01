@@ -5,6 +5,4 @@ workflows:
   node-tests:
     jobs:
       - node/test
-working_directory: ~/learning-experimentation/robofriends-ci-master
-checkout:
-  path: ~/learning-experimentation
+working_directory: ~//robofriends-ci-master
