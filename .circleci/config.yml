@@ -20,7 +20,7 @@ jobs:
       - run: echo "start of test..."
       - run: npm install
       - run: npm test
-  test_require:
+  testrequire:
     docker:
       - image: circleci/node:latest
     steps:
@@ -34,4 +34,4 @@ workflows:
       - build
       - test:
           requires:
-            - test_require
+            - testrequire
