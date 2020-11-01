@@ -1,0 +1,10 @@
+version: 2.1
+jobs:
+  test_1:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/learning-experimentation/robofriends-ci-master
+    steps:
+      - checkout:
+          path: ~/learning-experimentation
+      - run: echo "fml"

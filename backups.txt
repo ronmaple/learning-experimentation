@@ -1,19 +1,9 @@
-version: 2.1
-jobs:
-  test_1:
-    docker:
-      - image: circleci/node:latest
-    working_directory: ~/learning-experimentation/robofriends-ci-master
-    steps:
-      - checkout:
-          - path: ~/learning-experimentation
-      - run: echo "fml"
-workflows:
-  version: 2.1
-  test_run:
-    jobs:
-      - test_1
-  #   - run: CI=true npm run build
+# workflows:
+#   version: 2.1
+#   test_run:
+#     jobs:
+#       - test_1
+#   - run: CI=true npm run build
 #   test:
 #     docker:
 #       - image: circleci/node:latest
