@@ -33,5 +33,5 @@ workflows:
     jobs:
       - build
       - test:
-        requires:
-          - test_require
+          requires:
+            - test_require
