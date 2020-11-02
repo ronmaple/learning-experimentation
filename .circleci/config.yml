@@ -16,6 +16,7 @@ jobs:
   test:
     docker:
       - image: circleci/node:latest
+    working_directory: ~/learning-experimentation/robofriends-ci-master
     steps:
       - checkout:
           path: ~/robofriends-ci-master
@@ -28,8 +29,7 @@ jobs:
     docker:
       - image: circleci/node:latest
     steps:
-      - checkout:
-          path: ~/learning-experimentation
+      - checkout
       - run: echo "testing ::test_require to run in parallel with ::test"
 
 workflows:
