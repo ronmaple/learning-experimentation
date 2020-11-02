@@ -20,7 +20,7 @@ jobs:
       - run: echo "start of test..."
       - run: npm install
       - run: echo "end of install... check directory"
-      - run: pwd
+      - run: pwd && ls
       - run: npm test
   testrequire:
     docker:
