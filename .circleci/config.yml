@@ -19,6 +19,8 @@ jobs:
           path: ~/learning-experimentation
       - run: echo "start of test..."
       - run: npm install
+      - run: echo "end of install... check directory"
+      - run: pwd
       - run: npm test
   testrequire:
     docker:
