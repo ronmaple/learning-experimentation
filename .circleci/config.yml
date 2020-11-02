@@ -1,16 +1,43 @@
 version: 2.1
 jobs:
-  test_1:
+  build:
     docker:
       - image: circleci/node:latest
     working_directory: ~/learning-experimentation/robofriends-ci-master
     steps:
       - checkout:
           path: ~/learning-experimentation
-      - run: echo "fml"
+      - run: echo "npm installing..."
+      - run: echo "end of install... check directory"
+      - run: pwd && ls && cat package.json
       - run: npm install
+      - run: echo "CI=true..."
+      - run: CI=true npm run build
+  test:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/learning-experimentation/robofriends-ci-master
+    steps:
+      - checkout:
+          path: ~/learning-experimentation
+      - run: echo "start of test..."
+      - run: npm install
+      - run: echo "end of install... check directory"
+      - run: pwd && ls && cat package.json
+      - run: npm test
+  testrequire:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run: echo "testing ::test_require to run in parallel with ::test"
+
 workflows:
   version: 2.1
-  test_run:
+  build_and_test:
     jobs:
-      - test_1
+      - build
+      - testrequire
+      - test:
+          requires:
+            - testrequire
