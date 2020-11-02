@@ -19,7 +19,7 @@ jobs:
     working_directory: ~/learning-experimentation/robofriends-ci-master
     steps:
       - checkout:
-          path: ~/robofriends-ci-master
+          path: ~/learning-experimentation
       - run: echo "start of test..."
       - run: npm install
       - run: echo "end of install... check directory"
