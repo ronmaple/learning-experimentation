@@ -17,7 +17,8 @@ jobs:
     docker:
       - image: circleci/node:latest
     steps:
-      - checkout
+      - checkout:
+          path: ~/robofriends-ci-master
       - run: echo "start of test..."
       - run: npm install
       - run: echo "end of install... check directory"
